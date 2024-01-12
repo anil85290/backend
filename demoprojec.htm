@@ -1,0 +1,132 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Product</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container mt-5">
+        <div class="form-group">
+            <label for="productName">Product Name:</label>
+            <input type="text" class="form-control" id="productName">
+        </div>
+        <div class="form-group">
+            <label for="productPrice">Product Price:</label>
+            <input type="number" class="form-control" id="productPrice">
+        </div>
+        <button class="btn btn-primary" id="btn">Add Product</button>
+        
+        <div id="productList" class="mt-3">
+            <ul id="list" class="list-group"></ul>
+        </div>
+        <div id="totalAmount" class="mt-3">
+            <p id="para" class="p-lg-0"></p>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+    <script>
+        let productname = document.getElementById('productName');
+        let productprice = document.getElementById('productPrice');
+        let btn = document.getElementById('btn');
+        let items = document.getElementById('list');
+        let totalamount = document.getElementById('para');
+        console.log(total);
+        let total=0;
+
+                
+        btn.addEventListener("click", additems);
+        function additems(e){
+            e.preventDefault();
+            let newele= document.createElement("li");
+            newele.className="list-group-item";
+            let dltbtn = document.createElement("button");
+            dltbtn.className = "btn btn-danger btn-sm float-right delete";
+            dltbtn.innerText = "Delete";
+
+            let obje = {
+                Productname:productname.value,
+                Productprice:productprice.value,
+             };
+            axios.post('https://crudcrud.com/api/f74e70df5ea24a9e9462dd46b70feed4/products', obje)
+             .then( (response) => deletefun(response.data))
+             .catch( (err) => console.log(err))
+            function deletefun(obj){
+                console.log(obj);
+             
+                if (productprice.value !== "") {
+                    newele.appendChild(document.createTextNode(obj.Productname + " " + obj.Productprice));
+                    items.appendChild(newele);
+
+                    newele.appendChild(dltbtn);
+                    
+                    total+=parseInt(obj.Productprice);
+                    // productname.value="";
+                    // productprice.value="";
+
+                    } else {
+                        alert("Please fill all fields ");
+                    }
+                dltbtn.addEventListener("click", () => {dltbtnclick(obj._id)})
+                    
+                function dltbtnclick(id){
+                    total=total-obj.Productprice;
+                    totalamount.innerHTML= "Total Price: " + total;
+                    dltbtn.parentElement.remove();
+                    axios.delete('https://crudcrud.com/api/f74e70df5ea24a9e9462dd46b70feed4/products/'+id)
+
+                }
+                totalamount.innerHTML= "Total Price: " + total;
+            }
+        }
+        
+        
+        window.addEventListener('DOMContentLoaded', reloadfromcrud);
+        async function reloadfromcrud(){
+            try {
+
+                let response = await axios.get('https://crudcrud.com/api/f74e70df5ea24a9e9462dd46b70feed4/products');
+                let productsfromcrud = response.data;
+
+            
+
+                productsfromcrud.forEach( (product) => {
+                    total+=parseInt(product.Productprice);
+                
+                    let newele= document.createElement("li");
+                    newele.className="list-group-item";
+                    let dltbtn = document.createElement("button");
+                    dltbtn.className = "btn btn-danger btn-sm float-right delete";
+                    dltbtn.innerText = "Delete";
+                    newele.appendChild(document.createTextNode(product.Productname + " " + product.Productprice));
+                    items.appendChild(newele);
+
+                    newele.appendChild(dltbtn);
+                    dltbtn.addEventListener('click' , () => {
+                        dltbtnclick(product._id)
+                    });
+                    function dltbtnclick(id){
+                        dltbtn.parentElement.remove();
+                        axios.delete('https://crudcrud.com/api/f74e70df5ea24a9e9462dd46b70feed4/products/'+id)
+                        total=total-product.Productprice
+                        totalamount.innerHTML= "Total Price: " + total;
+                    }
+            });
+            
+            totalamount.innerHTML= "Total Price: " + total;
+            } catch (error) {
+                console.error('Error fetching products:', error);
+                }
+            }
+            
+        
+    </script>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+</body>
+</html>
