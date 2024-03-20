@@ -10,7 +10,7 @@ router.get( '/contactus',(req, res, next) => {
 
 router.post('/contactus', (req, res, next) => {
     console.log(req.body);
-    res.redirect('/success').send('<h1>Form successfully filled</h1>');
+    res.redirect('/success');
 
 });
 
