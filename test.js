@@ -4,11 +4,16 @@ const path = require('path');
 const express = require('express');
 const bodyparser = require('body-parser')
 const app = express();
+const db = require('./helper/database');
 const adminroutes = require('./routes/admin')
 const shoproutes = require('./routes/shop');
 const contactroute = require('./routes/contact');
 
-
+db.execute('SELECT * FROM products')
+    .then((result) => {
+        console.l0g(result)
+    })
+    .catch((err) => console.log(err))
 
 app.use(bodyparser.urlencoded({extended: false}));
 app.use('/admin', adminroutes);
@@ -23,3 +28,4 @@ app.use( (req,res,next) => {
 });
 
 app.listen(3000);
+console.log('hello world');
