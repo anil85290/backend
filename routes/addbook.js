@@ -1,11 +1,23 @@
 const express = require('express');
-const path = require('path');
 const router = express.Router();
-const rootdir = require('../helper/path');
 const addbookcontroller = require('../controllers/addbook');
 
-router.get('/' , addbookcontroller.getaddbook);
+// get all books
+router.get('/', addbookcontroller.getaddbook);
 
-router.post('/', addbookcontroller.postaddbook);
+// get all returned books
+router.get('/getreturnbook', addbookcontroller.getreturnedbook);
 
-module.exports=router;
+// add a new book
+router.post('/book', addbookcontroller.postaddbook);
+
+// return a book
+router.post('/postreturnbook', addbookcontroller.postreturnedbook);
+
+
+
+// delete a book by id
+router.delete('/deletebyid/:id', addbookcontroller.getdeletebook);
+
+
+module.exports = router;

@@ -9,14 +9,25 @@
             <body>
                 <div class="container mt-5">
                     <h2>Enter Book Name</h2>
-                    <form action="/" method="post">
+                    <form id="bookform">
                         <div class="form-group">
                             <label for="bookName">Book Name</label>
                             <input type="text" class="form-control" id="bookName" name="bookName" placeholder="Enter book name" required>
                         </div>
-                        <button type="submit" class="btn btn-primary">Submit</button>
+                        <button class="btn btn-primary" id="submit">Submit</button>
                     </form>
+                        <div class="list-group">
+                            <h3 class="mt-4">Book List</h3>
+                            <ul id="bookList" class="list-group">
+                            </ul>
+                            <h3 class="mt-4">Returned Books</h3>
+                            <ul id="returnedbooks" class="list-group">
+                            </ul>
+                        </div>
                 </div>
+                <script src="../console.js"></script>
+                <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
                 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
                 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
                 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>

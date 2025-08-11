@@ -9,11 +9,11 @@ const adminroutes = require('./routes/admin')
 const shoproutes = require('./routes/shop');
 const contactroute = require('./routes/contact');
 
-db.execute('SELECT * FROM products')
-    .then((result) => {
-        console.l0g(result)
-    })
-    .catch((err) => console.log(err))
+// db.execute('SELECT * FROM products')
+//     .then((result) => {
+//         console.l0g(result)
+//     })
+//     .catch((err) => console.log(err))
 
 app.use(bodyparser.urlencoded({extended: false}));
 app.use('/admin', adminroutes);
@@ -28,4 +28,3 @@ app.use( (req,res,next) => {
 });
 
 app.listen(3000);
-console.log('hello world');

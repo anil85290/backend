@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <title>Book Name Form</title>
+</head>
+<body>
+    <div class="container mt-5">
+        <h2>Enter Book Name</h2>
+        <form id="bookform">
+            <div class="form-group">
+                <label for="bookName">Book Name</label>
+                <input type="text" class="form-control" id="bookName" name="bookName" placeholder="Enter book name" required>
+            </div>
+            <button class="btn btn-primary" id="btn">Add Product</button>
+        </form>
+        <h3 class="mt-4">Book List</h3>
+        <ul id="bookList" class="list-group mt-3"></ul>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const bookNameInput = document.getElementById('bookName');
+            const form = document.getElementById('bookform');
+            const bookList = document.getElementById('bookList');
+
+            form.addEventListener("submit", function(e) {
+                e.preventDefault(); // Prevent default form submission
+
+                const title = bookNameInput.value.trim();
+                if (title === '') {
+                    alert('Please fill in the book name.');
+                    return;
+                }
+
+                // Create a new list item
+                const newBookItem = document.createElement('li');
+                newBookItem.className = 'list-group-item';
+                newBookItem.innerText = title;
+                bookList.appendChild(newBookItem);
+
+                // Clear the input field
+                bookNameInput.value = '';
+
+                // Send the book name to the server
+                axios.post('http://localhost:5000/book', { name: title })
+                    .then((res) => {
+                        console.log('Book added:', res.data);
+                    })
+                    .catch((err) => {
+                        console.error('Error adding book:', err);
+                    });
+            });
+        });
+    </script>
+</body>
+</html>

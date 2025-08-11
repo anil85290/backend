@@ -34,7 +34,6 @@
         let btn = document.getElementById('btn');
         let items = document.getElementById('list');
         let totalamount = document.getElementById('para');
-        console.log(total);
         let total=0;
 
                 
@@ -51,9 +50,9 @@
                 Productname:productname.value,
                 Productprice:productprice.value,
              };
-            axios.post('https://crudcrud.com/api/f74e70df5ea24a9e9462dd46b70feed4/products', obje)
-             .then( (response) => deletefun(response.data))
-             .catch( (err) => console.log(err))
+            axios.post('https://crudcrud.com/api/d2201356a3844938be2cde93189ebbfc/product', obje)
+              .then( (response) => deletefun(response.data))
+              .catch( (err) => console.log(err));
             function deletefun(obj){
                 console.log(obj);
              
@@ -76,7 +75,7 @@
                     total=total-obj.Productprice;
                     totalamount.innerHTML= "Total Price: " + total;
                     dltbtn.parentElement.remove();
-                    axios.delete('https://crudcrud.com/api/f74e70df5ea24a9e9462dd46b70feed4/products/'+id)
+                    axios.delete('https://crudcrud.com/api/d2201356a3844938be2cde93189ebbfc/product'+id)
 
                 }
                 totalamount.innerHTML= "Total Price: " + total;
@@ -88,7 +87,7 @@
         async function reloadfromcrud(){
             try {
 
-                let response = await axios.get('https://crudcrud.com/api/f74e70df5ea24a9e9462dd46b70feed4/products');
+                let response = await axios.get('https://crudcrud.com/api/d2201356a3844938be2cde93189ebbfc/product');
                 let productsfromcrud = response.data;
 
             
@@ -110,7 +109,7 @@
                     });
                     function dltbtnclick(id){
                         dltbtn.parentElement.remove();
-                        axios.delete('https://crudcrud.com/api/f74e70df5ea24a9e9462dd46b70feed4/products/'+id)
+                        axios.delete('https://crudcrud.com/Dashboard/d2201356a3844938be2cde93189ebbfc/product'+id)
                         total=total-product.Productprice
                         totalamount.innerHTML= "Total Price: " + total;
                     }
