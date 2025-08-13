@@ -7,12 +7,17 @@ const sequelize = require('./helper/database');
 app.use(cors());
 app.use(express.json());
 
-
-app.use(bodyparser.urlencoded({extended: false}));
-
 const bookroutes = require('./routes/addbook')
 
 app.use('/', bookroutes);
 
+sequelize.sync().then((result) => {
+    //console.log(result);
+    
+}).catch((err) => {
+    console.log(err);
+});
 app.listen(5000);
+
+
 
